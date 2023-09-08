@@ -1,5 +1,4 @@
-const Ship = function ShipFactory() {
-  let length;
+const Ship = function ShipFactory(name, length) {
   let hits = 0;
 
   const hit = function addOneToHits() {
@@ -11,11 +10,11 @@ const Ship = function ShipFactory() {
   };
 
   return {
+    get name() {
+      return name;
+    },
     get length() {
       return length;
-    },
-    set length(value) {
-      length = value;
     },
     get hits() {
       return hits;
