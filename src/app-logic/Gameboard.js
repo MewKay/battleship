@@ -15,10 +15,67 @@ const Gameboard = function GameboardFactory() {
     return list;
   })();
 
+  const convertCoordinates = function extractXandYCoordinates(coordinates) {
+    const arrayCoordinates = coordinates.split(",").map(Number);
+    return {
+      row: arrayCoordinates[0],
+      column: arrayCoordinates[1],
+    };
+  };
+
+  const isWithinRange = function checkIfNumberIsWithinGameboardDimension(
+    number
+  ) {
+    return number >= 1 && number <= 10;
+  };
+
+  const placeShip = function putShipToCoordinates(
+    shipToPlace,
+    shipHeadCoordinates,
+    isShipHorizontal
+  ) {
+    const shipStartingCoordinates = convertCoordinates(shipHeadCoordinates);
+
+    if (
+      !isWithinRange(shipStartingCoordinates.row) ||
+      !isWithinRange(shipStartingCoordinates.column)
+    ) {
+      return;
+    }
+
+    if (isShipHorizontal) {
+      for (
+        let i = shipStartingCoordinates.row;
+        i < shipStartingCoordinates.row + shipToPlace.length;
+        i += 1
+      ) {
+        coordinates[`${i},${shipStartingCoordinates.column}`] = {
+          ...coordinates[`${i},${shipStartingCoordinates.column}`],
+          shipPlacedName: shipToPlace.name,
+          isShipPlaced: true,
+        };
+      }
+    } else {
+      for (
+        let j = shipStartingCoordinates.column;
+        j < shipStartingCoordinates.column + shipToPlace.length;
+        j += 1
+      ) {
+        coordinates[`${shipStartingCoordinates.row},${j}`] = {
+          ...coordinates[`${shipStartingCoordinates.row},${j}`],
+          shipPlacedName: shipToPlace.name,
+          isShipPlaced: true,
+        };
+      }
+    }
+  };
+
   return {
     get coordinates() {
       return coordinates;
     },
+    placeShip,
+    convertCoordinates,
   };
 };
 
