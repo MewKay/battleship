@@ -50,22 +50,22 @@ describe("GameBoard object", () => {
 
     describe("should change the coordinates following ship's length when", () => {
       it("is set to be horizontal", () => {
-        for (let i = 1; i < 1 + shipToPlace.length; i += 1) {
-          expect(myGameboard.coordinates[`${i},5`].shipPlacedName).toBe(
+        for (let j = 5; j < 5 + shipToPlace.length; j += 1) {
+          expect(myGameboard.coordinates[`1,${j}`].shipPlacedName).toBe(
             shipToPlace.name
           );
-          expect(myGameboard.coordinates[`${i},5`].isShipPlaced).toBe(true);
+          expect(myGameboard.coordinates[`1,${j}`].isShipPlaced).toBe(true);
         }
       });
 
       it("is set to be vertical", () => {
         myGameboard.placeShip(Ship("Cruiser", 3), "6,1", false);
 
-        for (let j = 1; j < 1 + shipToPlace.length; j += 1) {
-          expect(myGameboard.coordinates[`6,${j}`].shipPlacedName).toBe(
+        for (let i = 6; i < 6 + shipToPlace.length; i += 1) {
+          expect(myGameboard.coordinates[`${i},1`].shipPlacedName).toBe(
             "Cruiser"
           );
-          expect(myGameboard.coordinates[`6,${j}`].isShipPlaced).toBe(true);
+          expect(myGameboard.coordinates[`${i},1`].isShipPlaced).toBe(true);
         }
       });
     });

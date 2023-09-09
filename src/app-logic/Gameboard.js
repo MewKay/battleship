@@ -47,24 +47,24 @@ const Gameboard = function GameboardFactory() {
 
     if (isShipHorizontal) {
       for (
-        let i = shipStartingCoordinates.row;
-        i < shipStartingCoordinates.row + shipToPlace.length;
-        i += 1
-      ) {
-        coordinates[`${i},${shipStartingCoordinates.column}`] = {
-          ...coordinates[`${i},${shipStartingCoordinates.column}`],
-          shipPlacedName: shipToPlace.name,
-          isShipPlaced: true,
-        };
-      }
-    } else {
-      for (
         let j = shipStartingCoordinates.column;
         j < shipStartingCoordinates.column + shipToPlace.length;
         j += 1
       ) {
         coordinates[`${shipStartingCoordinates.row},${j}`] = {
           ...coordinates[`${shipStartingCoordinates.row},${j}`],
+          shipPlacedName: shipToPlace.name,
+          isShipPlaced: true,
+        };
+      }
+    } else {
+      for (
+        let i = shipStartingCoordinates.row;
+        i < shipStartingCoordinates.row + shipToPlace.length;
+        i += 1
+      ) {
+        coordinates[`${i},${shipStartingCoordinates.column}`] = {
+          ...coordinates[`${i},${shipStartingCoordinates.column}`],
           shipPlacedName: shipToPlace.name,
           isShipPlaced: true,
         };
