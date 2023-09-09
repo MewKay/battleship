@@ -31,6 +31,62 @@ const Gameboard = function GameboardFactory() {
     return number >= 1 && number <= 10;
   };
 
+  const isShipPlacementValid =
+    function checkIfShipPlacedWithSpecifiedHeadCoordinatesIsValid(
+      shipToPlace,
+      shipHeadCoordinates,
+      isShipHorizontal
+    ) {
+      const shipStartingCoordinates = convertCoordinates(shipHeadCoordinates);
+
+      if (
+        !isWithinRange(shipStartingCoordinates.row) ||
+        !isWithinRange(shipStartingCoordinates.column)
+      ) {
+        return false;
+      }
+
+      if (isShipHorizontal) {
+        if (
+          !isWithinRange(
+            shipStartingCoordinates.column + shipToPlace.length - 1
+          )
+        ) {
+          return false;
+        }
+
+        for (
+          let j = shipStartingCoordinates.column;
+          j < shipStartingCoordinates.column + shipToPlace.length;
+          j += 1
+        ) {
+          if (coordinates[`${shipStartingCoordinates.row},${j}`].isShipPlaced) {
+            return false;
+          }
+        }
+      } else {
+        if (
+          !isWithinRange(shipStartingCoordinates.row + shipToPlace.length - 1)
+        ) {
+          return false;
+        }
+
+        for (
+          let i = shipStartingCoordinates.row;
+          i < shipStartingCoordinates.row + shipToPlace.length;
+          i += 1
+        ) {
+          if (
+            coordinates[`${i},${shipStartingCoordinates.column}`].isShipPlaced
+          ) {
+            return false;
+          }
+        }
+      }
+
+      return true;
+    };
+
   const placeShip = function putShipToCoordinates(
     shipToPlace,
     shipHeadCoordinates,
@@ -39,19 +95,12 @@ const Gameboard = function GameboardFactory() {
     const shipStartingCoordinates = convertCoordinates(shipHeadCoordinates);
 
     if (
-      !isWithinRange(shipStartingCoordinates.row) ||
-      !isWithinRange(shipStartingCoordinates.column)
+      !isShipPlacementValid(shipToPlace, shipHeadCoordinates, isShipHorizontal)
     ) {
       return;
     }
 
     if (isShipHorizontal) {
-      if (
-        !isWithinRange(shipStartingCoordinates.column + shipToPlace.length - 1)
-      ) {
-        return;
-      }
-
       for (
         let j = shipStartingCoordinates.column;
         j < shipStartingCoordinates.column + shipToPlace.length;
@@ -64,12 +113,6 @@ const Gameboard = function GameboardFactory() {
         };
       }
     } else {
-      if (
-        !isWithinRange(shipStartingCoordinates.row + shipToPlace.length - 1)
-      ) {
-        return;
-      }
-
       for (
         let i = shipStartingCoordinates.row;
         i < shipStartingCoordinates.row + shipToPlace.length;

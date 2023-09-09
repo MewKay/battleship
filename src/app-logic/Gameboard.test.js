@@ -115,5 +115,25 @@ describe("GameBoard object", () => {
         }
       });
     });
+
+    describe("should not accept ship if another ship is already placed on the same coordinates", () => {
+      it("should not accept if same head coordinates", () => {
+        myGameboard.placeShip(Ship("Carrier", 5), shipHeadCoordinates, false);
+
+        expect(
+          myGameboard.coordinates[shipHeadCoordinates].shipPlacedName
+        ).toBe(shipToPlace.name);
+      });
+
+      it("should not accept if ship tail conflict with another existing ship", () => {
+        myGameboard.placeShip(Ship("Carrier", 5), "1,4", true);
+
+        for (let j = 4; j < 4 + 5; j += 1) {
+          expect(myGameboard.coordinates[`1,${j}`].shipPlacedName).not.toBe(
+            "Carrier"
+          );
+        }
+      });
+    });
   });
 });
