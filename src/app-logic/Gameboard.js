@@ -15,6 +15,8 @@ const Gameboard = function GameboardFactory() {
     return list;
   })();
 
+  const ShipStored = {};
+
   const convertCoordinates = function extractXandYCoordinates(coordinates) {
     const arrayCoordinates = coordinates.split(",").map(Number);
     return {
@@ -68,6 +70,8 @@ const Gameboard = function GameboardFactory() {
         };
       }
     }
+
+    ShipStored[shipToPlace.name] = shipToPlace;
   };
 
   return {
