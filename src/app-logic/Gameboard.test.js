@@ -1,5 +1,6 @@
 import Gameboard from "./Gameboard";
 import Ship from "./Ship";
+import ShipClasses from "./ShipClasses";
 
 describe("GameBoard object", () => {
   describe("Coordinates property", () => {
@@ -34,7 +35,7 @@ describe("GameBoard object", () => {
 
   describe("placeShip function", () => {
     const myGameboard2 = Gameboard();
-    const shipToPlace = Ship("Destroyer", 2);
+    const shipToPlace = ShipClasses.DESTROYER;
     const shipHeadCoordinates = "1,5";
     const isShipHorizontal = true;
     myGameboard2.placeShip(shipToPlace, shipHeadCoordinates, isShipHorizontal);
@@ -59,7 +60,7 @@ describe("GameBoard object", () => {
       });
 
       it("is set to be vertical", () => {
-        myGameboard2.placeShip(Ship("Cruiser", 3), "6,1", false);
+        myGameboard2.placeShip(ShipClasses.CRUISER, "6,1", false);
 
         for (let i = 6; i < 6 + shipToPlace.length; i += 1) {
           expect(myGameboard2.coordinates[`${i},1`].shipPlacedName).toBe(
@@ -80,7 +81,7 @@ describe("GameBoard object", () => {
 
     describe("should not accept ship if it exceeds the grid", () => {
       it("should not exceeds horizontally", () => {
-        const shipToPlace = Ship("Carrier", 5);
+        const shipToPlace = ShipClasses.CARRIER;
         const overflowingCoordinate = "1,10";
         const initialCoordinateState = {
           ...myGameboard2.coordinates[overflowingCoordinate],
@@ -98,7 +99,7 @@ describe("GameBoard object", () => {
       });
 
       it("should not exceeds vertically", () => {
-        const shipToPlace = Ship("Carrier", 5);
+        const shipToPlace = ShipClasses.CARRIER;
         const overflowingCoordinate = "10,1";
         const initialCoordinateState = {
           ...myGameboard2.coordinates[overflowingCoordinate],
@@ -118,7 +119,7 @@ describe("GameBoard object", () => {
 
     describe("should not accept ship if another ship is already placed on the same coordinates", () => {
       it("should not accept if same head coordinates", () => {
-        myGameboard2.placeShip(Ship("Carrier", 5), shipHeadCoordinates, false);
+        myGameboard2.placeShip(ShipClasses.CARRIER, shipHeadCoordinates, false);
 
         expect(
           myGameboard2.coordinates[shipHeadCoordinates].shipPlacedName
@@ -151,13 +152,13 @@ describe("GameBoard object", () => {
     const myGameboard4 = Gameboard();
     const myGameboard5 = Gameboard();
 
-    myGameboard4.placeShip(Ship("Destroyer", 2), "1,5", true);
-    myGameboard4.placeShip(Ship("Submarine", 3), "4,2", false);
-    myGameboard4.placeShip(Ship("Battleship", 4), "2,2", true);
+    myGameboard4.placeShip(ShipClasses.DESTROYER, "1,5", true);
+    myGameboard4.placeShip(ShipClasses.SUBMARINE, "4,2", false);
+    myGameboard4.placeShip(ShipClasses.BATTLESHIP, "2,2", true);
 
-    myGameboard5.placeShip(Ship("Destroyer", 2), "1,5", true);
-    myGameboard5.placeShip(Ship("Submarine", 3), "4,2", false);
-    myGameboard5.placeShip(Ship("Battleship", 4), "2,2", true);
+    myGameboard5.placeShip(ShipClasses.DESTROYER, "1,5", true);
+    myGameboard5.placeShip(ShipClasses.SUBMARINE, "4,2", false);
+    myGameboard5.placeShip(ShipClasses.BATTLESHIP, "2,2", true);
 
     it("be true is all ships placed are sunk", () => {
       myGameboard4.receiveAttack("1,5");
