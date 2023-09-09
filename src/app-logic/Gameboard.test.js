@@ -136,4 +136,13 @@ describe("GameBoard object", () => {
       });
     });
   });
+
+  describe("receiveAttack function", () => {
+    const targetCoordinates = "1,6";
+    myGameboard.receiveAttack(targetCoordinates);
+
+    it("should update the right coordinates", () => {
+      expect(myGameboard.coordinates[targetCoordinates].hit).toBe(true);
+    });
+  });
 });

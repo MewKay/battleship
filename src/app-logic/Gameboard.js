@@ -129,12 +129,33 @@ const Gameboard = function GameboardFactory() {
     ShipStored[shipToPlace.name] = shipToPlace;
   };
 
+  const receiveAttack = function updateCoordinatesAndShipHitProperty(
+    targetCoordinates
+  ) {
+    if (coordinates[targetCoordinates].hit === true) {
+      return;
+    }
+
+    coordinates[targetCoordinates] = {
+      ...coordinates[targetCoordinates],
+      hit: true,
+    };
+    const targetedShipName = coordinates[targetCoordinates].shipPlacedName;
+
+    if (!targetedShipName) {
+      return;
+    }
+
+    ShipStored[targetedShipName].hit();
+  };
+
   return {
     get coordinates() {
       return coordinates;
     },
     placeShip,
     convertCoordinates,
+    receiveAttack,
   };
 };
 
