@@ -149,6 +149,18 @@ const Gameboard = function GameboardFactory() {
     ShipStored[targetedShipName].hit();
   };
 
+  const allShipsSunk = function checkIfAllShipInsideShipStoreAreSunk() {
+    const keys = Object.keys(ShipStored);
+
+    for (const key of keys) {
+      if (!ShipStored[key].isSunk()) {
+        return false;
+      }
+    }
+
+    return true;
+  };
+
   return {
     get coordinates() {
       return coordinates;
@@ -156,6 +168,7 @@ const Gameboard = function GameboardFactory() {
     placeShip,
     convertCoordinates,
     receiveAttack,
+    allShipsSunk,
   };
 };
 

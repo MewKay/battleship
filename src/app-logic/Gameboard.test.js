@@ -2,10 +2,9 @@ import Gameboard from "./Gameboard";
 import Ship from "./Ship";
 
 describe("GameBoard object", () => {
-  const myGameboard = Gameboard();
-
   describe("Coordinates property", () => {
-    let listOfCoordinates = { ...myGameboard.coordinates };
+    const myGameboard1 = Gameboard();
+    let listOfCoordinates = { ...myGameboard1.coordinates };
     let arrayOfCoordinatesKeys = Object.keys(listOfCoordinates);
 
     it("should be defined", () => {
@@ -34,16 +33,17 @@ describe("GameBoard object", () => {
   });
 
   describe("placeShip function", () => {
+    const myGameboard2 = Gameboard();
     const shipToPlace = Ship("Destroyer", 2);
     const shipHeadCoordinates = "1,5";
     const isShipHorizontal = true;
-    myGameboard.placeShip(shipToPlace, shipHeadCoordinates, isShipHorizontal);
+    myGameboard2.placeShip(shipToPlace, shipHeadCoordinates, isShipHorizontal);
 
     it("should change the coordinates to receive the ship's head name and set isShipPlaced to true", () => {
-      expect(myGameboard.coordinates[shipHeadCoordinates].shipPlacedName).toBe(
+      expect(myGameboard2.coordinates[shipHeadCoordinates].shipPlacedName).toBe(
         shipToPlace.name
       );
-      expect(myGameboard.coordinates[shipHeadCoordinates].isShipPlaced).toBe(
+      expect(myGameboard2.coordinates[shipHeadCoordinates].isShipPlaced).toBe(
         true
       );
     });
@@ -51,31 +51,31 @@ describe("GameBoard object", () => {
     describe("should change the coordinates following ship's length when", () => {
       it("is set to be horizontal", () => {
         for (let j = 5; j < 5 + shipToPlace.length; j += 1) {
-          expect(myGameboard.coordinates[`1,${j}`].shipPlacedName).toBe(
+          expect(myGameboard2.coordinates[`1,${j}`].shipPlacedName).toBe(
             shipToPlace.name
           );
-          expect(myGameboard.coordinates[`1,${j}`].isShipPlaced).toBe(true);
+          expect(myGameboard2.coordinates[`1,${j}`].isShipPlaced).toBe(true);
         }
       });
 
       it("is set to be vertical", () => {
-        myGameboard.placeShip(Ship("Cruiser", 3), "6,1", false);
+        myGameboard2.placeShip(Ship("Cruiser", 3), "6,1", false);
 
         for (let i = 6; i < 6 + shipToPlace.length; i += 1) {
-          expect(myGameboard.coordinates[`${i},1`].shipPlacedName).toBe(
+          expect(myGameboard2.coordinates[`${i},1`].shipPlacedName).toBe(
             "Cruiser"
           );
-          expect(myGameboard.coordinates[`${i},1`].isShipPlaced).toBe(true);
+          expect(myGameboard2.coordinates[`${i},1`].isShipPlaced).toBe(true);
         }
       });
     });
 
     it("should only receive valid coordinates", () => {
-      myGameboard.placeShip(shipToPlace, "15,2", isShipHorizontal);
-      myGameboard.placeShip(shipToPlace, "0,8", isShipHorizontal);
+      myGameboard2.placeShip(shipToPlace, "15,2", isShipHorizontal);
+      myGameboard2.placeShip(shipToPlace, "0,8", isShipHorizontal);
 
-      expect(myGameboard.coordinates["15,2"]).toBeUndefined();
-      expect(myGameboard.coordinates["0,8"]).toBeUndefined();
+      expect(myGameboard2.coordinates["15,2"]).toBeUndefined();
+      expect(myGameboard2.coordinates["0,8"]).toBeUndefined();
     });
 
     describe("should not accept ship if it exceeds the grid", () => {
@@ -83,17 +83,17 @@ describe("GameBoard object", () => {
         const shipToPlace = Ship("Carrier", 5);
         const overflowingCoordinate = "1,10";
         const initialCoordinateState = {
-          ...myGameboard.coordinates[overflowingCoordinate],
+          ...myGameboard2.coordinates[overflowingCoordinate],
         };
 
-        myGameboard.placeShip(shipToPlace, overflowingCoordinate, true);
+        myGameboard2.placeShip(shipToPlace, overflowingCoordinate, true);
 
-        expect(myGameboard.coordinates[overflowingCoordinate]).toEqual(
+        expect(myGameboard2.coordinates[overflowingCoordinate]).toEqual(
           initialCoordinateState
         );
 
         for (let j = 11; j < shipToPlace.length + 11; j += 1) {
-          expect(myGameboard.coordinates[`1,${j}`]).toBeUndefined();
+          expect(myGameboard2.coordinates[`1,${j}`]).toBeUndefined();
         }
       });
 
@@ -101,35 +101,35 @@ describe("GameBoard object", () => {
         const shipToPlace = Ship("Carrier", 5);
         const overflowingCoordinate = "10,1";
         const initialCoordinateState = {
-          ...myGameboard.coordinates[overflowingCoordinate],
+          ...myGameboard2.coordinates[overflowingCoordinate],
         };
 
-        myGameboard.placeShip(shipToPlace, overflowingCoordinate, false);
+        myGameboard2.placeShip(shipToPlace, overflowingCoordinate, false);
 
-        expect(myGameboard.coordinates[overflowingCoordinate]).toEqual(
+        expect(myGameboard2.coordinates[overflowingCoordinate]).toEqual(
           initialCoordinateState
         );
 
         for (let i = 11; i < shipToPlace.length + 11; i += 1) {
-          expect(myGameboard.coordinates[`${i},1`]).toBeUndefined();
+          expect(myGameboard2.coordinates[`${i},1`]).toBeUndefined();
         }
       });
     });
 
     describe("should not accept ship if another ship is already placed on the same coordinates", () => {
       it("should not accept if same head coordinates", () => {
-        myGameboard.placeShip(Ship("Carrier", 5), shipHeadCoordinates, false);
+        myGameboard2.placeShip(Ship("Carrier", 5), shipHeadCoordinates, false);
 
         expect(
-          myGameboard.coordinates[shipHeadCoordinates].shipPlacedName
+          myGameboard2.coordinates[shipHeadCoordinates].shipPlacedName
         ).toBe(shipToPlace.name);
       });
 
       it("should not accept if ship tail conflict with another existing ship", () => {
-        myGameboard.placeShip(Ship("Carrier", 5), "1,4", true);
+        myGameboard2.placeShip(Ship("Carrier", 5), "1,4", true);
 
         for (let j = 4; j < 4 + 5; j += 1) {
-          expect(myGameboard.coordinates[`1,${j}`].shipPlacedName).not.toBe(
+          expect(myGameboard2.coordinates[`1,${j}`].shipPlacedName).not.toBe(
             "Carrier"
           );
         }
@@ -138,11 +138,56 @@ describe("GameBoard object", () => {
   });
 
   describe("receiveAttack function", () => {
+    const myGameboard3 = Gameboard();
     const targetCoordinates = "1,6";
-    myGameboard.receiveAttack(targetCoordinates);
+    myGameboard3.receiveAttack(targetCoordinates);
 
     it("should update the right coordinates", () => {
-      expect(myGameboard.coordinates[targetCoordinates].hit).toBe(true);
+      expect(myGameboard3.coordinates[targetCoordinates].hit).toBe(true);
+    });
+  });
+
+  describe("allShipsSunk function", () => {
+    const myGameboard4 = Gameboard();
+    const myGameboard5 = Gameboard();
+
+    myGameboard4.placeShip(Ship("Destroyer", 2), "1,5", true);
+    myGameboard4.placeShip(Ship("Submarine", 3), "4,2", false);
+    myGameboard4.placeShip(Ship("Battleship", 4), "2,2", true);
+
+    myGameboard5.placeShip(Ship("Destroyer", 2), "1,5", true);
+    myGameboard5.placeShip(Ship("Submarine", 3), "4,2", false);
+    myGameboard5.placeShip(Ship("Battleship", 4), "2,2", true);
+
+    it("be true is all ships placed are sunk", () => {
+      myGameboard4.receiveAttack("1,5");
+      myGameboard4.receiveAttack("1,6");
+
+      myGameboard4.receiveAttack("4,2");
+      myGameboard4.receiveAttack("5,2");
+      myGameboard4.receiveAttack("6,2");
+
+      myGameboard4.receiveAttack("2,2");
+      myGameboard4.receiveAttack("2,3");
+      myGameboard4.receiveAttack("2,4");
+      myGameboard4.receiveAttack("2,5");
+
+      expect(myGameboard4.allShipsSunk()).toBe(true);
+    });
+
+    it("be false is at least one ship isn't sunk", () => {
+      myGameboard5.receiveAttack("1,5");
+      myGameboard5.receiveAttack("1,6");
+
+      myGameboard5.receiveAttack("4,2");
+      myGameboard5.receiveAttack("6,2");
+
+      myGameboard5.receiveAttack("2,2");
+      myGameboard5.receiveAttack("2,3");
+      myGameboard5.receiveAttack("2,4");
+      myGameboard5.receiveAttack("2,5");
+
+      expect(myGameboard5.allShipsSunk()).toBe(false);
     });
   });
 });
