@@ -46,6 +46,12 @@ const Gameboard = function GameboardFactory() {
     }
 
     if (isShipHorizontal) {
+      if (
+        !isWithinRange(shipStartingCoordinates.column + shipToPlace.length - 1)
+      ) {
+        return;
+      }
+
       for (
         let j = shipStartingCoordinates.column;
         j < shipStartingCoordinates.column + shipToPlace.length;
@@ -58,6 +64,12 @@ const Gameboard = function GameboardFactory() {
         };
       }
     } else {
+      if (
+        !isWithinRange(shipStartingCoordinates.row + shipToPlace.length - 1)
+      ) {
+        return;
+      }
+
       for (
         let i = shipStartingCoordinates.row;
         i < shipStartingCoordinates.row + shipToPlace.length;

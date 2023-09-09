@@ -77,5 +77,43 @@ describe("GameBoard object", () => {
       expect(myGameboard.coordinates["15,2"]).toBeUndefined();
       expect(myGameboard.coordinates["0,8"]).toBeUndefined();
     });
+
+    describe("should not accept ship if it exceeds the grid", () => {
+      it("should not exceeds horizontally", () => {
+        const shipToPlace = Ship("Carrier", 5);
+        const overflowingCoordinate = "1,10";
+        const initialCoordinateState = {
+          ...myGameboard.coordinates[overflowingCoordinate],
+        };
+
+        myGameboard.placeShip(shipToPlace, overflowingCoordinate, true);
+
+        expect(myGameboard.coordinates[overflowingCoordinate]).toEqual(
+          initialCoordinateState
+        );
+
+        for (let j = 11; j < shipToPlace.length + 11; j += 1) {
+          expect(myGameboard.coordinates[`1,${j}`]).toBeUndefined();
+        }
+      });
+
+      it("should not exceeds vertically", () => {
+        const shipToPlace = Ship("Carrier", 5);
+        const overflowingCoordinate = "10,1";
+        const initialCoordinateState = {
+          ...myGameboard.coordinates[overflowingCoordinate],
+        };
+
+        myGameboard.placeShip(shipToPlace, overflowingCoordinate, false);
+
+        expect(myGameboard.coordinates[overflowingCoordinate]).toEqual(
+          initialCoordinateState
+        );
+
+        for (let i = 11; i < shipToPlace.length + 11; i += 1) {
+          expect(myGameboard.coordinates[`${i},1`]).toBeUndefined();
+        }
+      });
+    });
   });
 });
