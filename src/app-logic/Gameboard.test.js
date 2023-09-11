@@ -160,7 +160,7 @@ describe("GameBoard object", () => {
     myGameboard5.placeShip(ShipClasses.SUBMARINE, "4,2", false);
     myGameboard5.placeShip(ShipClasses.BATTLESHIP, "2,2", true);
 
-    it("be true is all ships placed are sunk", () => {
+    it("should be true if all ships placed are sunk", () => {
       myGameboard4.receiveAttack("1,5");
       myGameboard4.receiveAttack("1,6");
 
@@ -176,7 +176,7 @@ describe("GameBoard object", () => {
       expect(myGameboard4.allShipsSunk()).toBe(true);
     });
 
-    it("be false is at least one ship isn't sunk", () => {
+    it("should be false if at least one ship isn't sunk", () => {
       myGameboard5.receiveAttack("1,5");
       myGameboard5.receiveAttack("1,6");
 
