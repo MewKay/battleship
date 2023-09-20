@@ -149,6 +149,25 @@ const Gameboard = function GameboardFactory() {
     ShipStored[targetedShipName].hit();
   };
 
+  const isAttackValid = function checkIfGivenCoordinatesIsAValidAttack(
+    attackCoordinates
+  ) {
+    const convertedAttackCoordinates = convertCoordinates(attackCoordinates);
+
+    if (
+      !isWithinRange(convertedAttackCoordinates.row) ||
+      !isWithinRange(convertedAttackCoordinates.column)
+    ) {
+      return false;
+    }
+
+    if (coordinates[attackCoordinates].hit === true) {
+      return false;
+    }
+
+    return true;
+  };
+
   const allShipsSunk = function checkIfAllShipInsideShipStoreAreSunk() {
     const keys = Object.keys(ShipStored);
 
@@ -168,6 +187,7 @@ const Gameboard = function GameboardFactory() {
     placeShip,
     receiveAttack,
     allShipsSunk,
+    isAttackValid,
   };
 };
 

@@ -191,4 +191,28 @@ describe("GameBoard object", () => {
       expect(myGameboard5.allShipsSunk()).toBe(false);
     });
   });
+
+  describe("isAttackValid function", () => {
+    const myGameboard6 = Gameboard();
+
+    it("should return false if coordinates exceeds the grid", () => {
+      expect(myGameboard6.isAttackValid("2,15")).toBe(false);
+      expect(myGameboard6.isAttackValid("15,2")).toBe(false);
+      expect(myGameboard6.isAttackValid("11,5")).toBe(false);
+      expect(myGameboard6.isAttackValid("0,4")).toBe(false);
+    });
+
+    it("should return false if coordinates was already been hit", () => {
+      const initialCoordinates = "5,7";
+      myGameboard6.receiveAttack(initialCoordinates);
+      expect(myGameboard6.isAttackValid(initialCoordinates)).toBe(false);
+    });
+
+    it("should return true for coordinates within range and not already hits", () => {
+      expect(myGameboard6.isAttackValid("5,6")).toBe(true);
+      expect(myGameboard6.isAttackValid("7,2")).toBe(true);
+      expect(myGameboard6.isAttackValid("10,1")).toBe(true);
+      expect(myGameboard6.isAttackValid("1,10")).toBe(true);
+    });
+  });
 });
