@@ -166,7 +166,6 @@ const Gameboard = function GameboardFactory() {
       return coordinates;
     },
     placeShip,
-    convertCoordinates,
     receiveAttack,
     allShipsSunk,
   };

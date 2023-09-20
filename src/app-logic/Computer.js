@@ -29,6 +29,7 @@ const Computer = function ComputerFactory() {
       return opponent;
     },
     setOpponent,
+    playMove,
   };
 };
 
