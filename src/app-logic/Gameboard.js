@@ -17,6 +17,9 @@ const Gameboard = function GameboardFactory() {
 
   const ShipStored = {};
 
+  let coordinatesNotYetHit = [...Object.keys(coordinates)];
+  let coordinatesHit = [];
+
   const convertCoordinates = function extractXandYCoordinates(coordinates) {
     const arrayCoordinates = coordinates.split(",").map(Number);
     return {
@@ -140,6 +143,12 @@ const Gameboard = function GameboardFactory() {
       ...coordinates[targetCoordinates],
       hit: true,
     };
+
+    coordinatesNotYetHit = coordinatesNotYetHit.filter(
+      (coordinate) => coordinate !== targetCoordinates
+    );
+    coordinatesHit.push(targetCoordinates);
+
     const targetedShipName = coordinates[targetCoordinates].shipPlacedName;
 
     if (!targetedShipName) {
@@ -183,6 +192,12 @@ const Gameboard = function GameboardFactory() {
   return {
     get coordinates() {
       return coordinates;
+    },
+    get coordinatesHit() {
+      return coordinatesHit;
+    },
+    get coordinatesNotYetHit() {
+      return coordinatesNotYetHit;
     },
     placeShip,
     receiveAttack,

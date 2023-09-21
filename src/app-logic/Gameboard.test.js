@@ -215,4 +215,42 @@ describe("GameBoard object", () => {
       expect(myGameboard6.isAttackValid("1,10")).toBe(true);
     });
   });
+
+  describe("coordinatesHit and CoordinatesNotYetHit properties", () => {
+    const myGameboard7 = Gameboard();
+    const totalNumberOfCoordinate = myGameboard7.coordinatesNotYetHit.length;
+    const coordinate1 = "1,6";
+    const coordinate2 = "7,8";
+    const coordinate3 = "10,2";
+
+    myGameboard7.receiveAttack(coordinate1);
+    myGameboard7.receiveAttack(coordinate2);
+    myGameboard7.receiveAttack(coordinate3);
+
+    describe("coordinatesHit property", () => {
+      it("should include attacked coordinates", () => {
+        expect(myGameboard7.coordinatesHit.includes(coordinate1)).toBe(true);
+        expect(myGameboard7.coordinatesHit.includes(coordinate2)).toBe(true);
+        expect(myGameboard7.coordinatesHit.includes(coordinate3)).toBe(true);
+        expect(myGameboard7.coordinatesHit.length).toBe(3);
+      });
+    });
+
+    describe("coordinatesNotYetHit property", () => {
+      it("should reduced by attacked coordinates", () => {
+        expect(myGameboard7.coordinatesNotYetHit.includes(coordinate1)).toBe(
+          false
+        );
+        expect(myGameboard7.coordinatesNotYetHit.includes(coordinate2)).toBe(
+          false
+        );
+        expect(myGameboard7.coordinatesNotYetHit.includes(coordinate3)).toBe(
+          false
+        );
+        expect(myGameboard7.coordinatesNotYetHit.length).toBe(
+          totalNumberOfCoordinate - 3
+        );
+      });
+    });
+  });
 });
