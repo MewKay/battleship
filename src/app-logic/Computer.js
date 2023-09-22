@@ -13,10 +13,16 @@ const Computer = function ComputerFactory() {
   };
 
   const playMove = function makeARandomMoveInsideOpponentGameboard() {
-    const targetX = getRandomBetween(1, 10);
-    const targetY = getRandomBetween(1, 10);
+    const targetToAttackIndexFirst = 0;
+    const targetToAttackIndexLast =
+      opponent.gameboard.coordinatesNotYetHit.length - 1;
+    const targetToAttackIndex = getRandomBetween(
+      targetToAttackIndexFirst,
+      targetToAttackIndexLast
+    );
 
-    const targetCoordinates = `${targetX},${targetY}`;
+    const targetCoordinates =
+      opponent.gameboard.coordinatesNotYetHit[targetToAttackIndex];
 
     opponent.gameboard.receiveAttack(targetCoordinates);
   };
