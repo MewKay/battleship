@@ -47,6 +47,35 @@ describe("Computer object", () => {
           initialOpponentCoordinatesNotYetHit.length - NUMBER_OF_MOVES
         );
       });
+
+      it("is called when every coordinates are hit, should not update", () => {
+        const player2 = Player("John Human 2");
+        const computer2 = Computer();
+
+        player2.setOpponent(computer2);
+        computer2.setOpponent(player2);
+
+        for (let i = 0; i < 100; i += 1) {
+          const currentCoordinate = player2.gameboard.coordinatesNotYetHit[0];
+          player2.gameboard.receiveAttack(currentCoordinate);
+        }
+
+        const initialOpponentCoordinatesHit = [
+          ...computer2.opponent.gameboard.coordinatesHit,
+        ];
+        const initialOpponentCoordinatesNotYetHit = [
+          ...computer2.opponent.gameboard.coordinatesNotYetHit,
+        ];
+
+        computer2.playMove();
+
+        expect(player2.gameboard.coordinatesHit.length).toBe(
+          initialOpponentCoordinatesHit.length
+        );
+        expect(player2.gameboard.coordinatesNotYetHit.length).toBe(
+          initialOpponentCoordinatesNotYetHit.length
+        );
+      });
     });
   });
 });

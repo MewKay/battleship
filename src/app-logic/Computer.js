@@ -13,6 +13,10 @@ const Computer = function ComputerFactory() {
   };
 
   const playMove = function makeARandomMoveInsideOpponentGameboard() {
+    if (opponent.gameboard.coordinatesHit.length >= 100) {
+      return;
+    }
+
     const targetToAttackIndexFirst = 0;
     const targetToAttackIndexLast =
       opponent.gameboard.coordinatesNotYetHit.length - 1;
