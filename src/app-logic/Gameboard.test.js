@@ -253,4 +253,35 @@ describe("GameBoard object", () => {
       });
     });
   });
+
+  describe("resetBoard function", () => {
+    const myGameboard8 = Gameboard();
+    const defaultCoordinates = { ...myGameboard8.coordinates };
+    const defaultCoordinatesHit = [...myGameboard8.coordinatesHit];
+    const defaultCoordinatesNotYetHit = [...myGameboard8.coordinatesNotYetHit];
+
+    myGameboard8.placeShip(ShipClasses.CRUISER, "1,2", true);
+    myGameboard8.placeShip(ShipClasses.DESTROYER, "5,7", false);
+    myGameboard8.placeShip(ShipClasses.SUBMARINE, "8,1", false);
+
+    myGameboard8.receiveAttack("10,5");
+    myGameboard8.receiveAttack("9,1");
+    myGameboard8.receiveAttack("1,2");
+
+    myGameboard8.resetBoard();
+
+    it("should have coordinates reset to default", () => {
+      expect(myGameboard8.coordinates).toStrictEqual(defaultCoordinates);
+    });
+
+    it("should have coordinatesHit reset to default", () => {
+      expect(myGameboard8.coordinatesHit).toStrictEqual(defaultCoordinatesHit);
+    });
+
+    it("should have coordinatesNotYetHit reset to default", () => {
+      expect(myGameboard8.coordinatesNotYetHit).toStrictEqual(
+        defaultCoordinatesNotYetHit
+      );
+    });
+  });
 });

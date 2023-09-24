@@ -14,9 +14,7 @@ const Gameboard = function GameboardFactory() {
 
     return list;
   })();
-
-  const ShipStored = {};
-
+  let ShipStored = {};
   let coordinatesNotYetHit = [...Object.keys(coordinates)];
   let coordinatesHit = [];
 
@@ -189,6 +187,24 @@ const Gameboard = function GameboardFactory() {
     return true;
   };
 
+  const resetBoard =
+    function resetEveryCoordinatesAndShipPlacedToInitialState() {
+      const coordinatesKey = Object.keys(coordinates);
+      coordinatesKey.forEach((key) => {
+        coordinates[key] = {
+          shipPlacedName: null,
+          isShipPlaced: false,
+          hit: false,
+        };
+      });
+
+      coordinatesHit = [];
+
+      coordinatesNotYetHit = [...coordinatesKey];
+
+      ShipStored = {};
+    };
+
   return {
     get coordinates() {
       return coordinates;
@@ -203,6 +219,7 @@ const Gameboard = function GameboardFactory() {
     receiveAttack,
     allShipsSunk,
     isAttackValid,
+    resetBoard,
   };
 };
 
