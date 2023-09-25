@@ -216,7 +216,7 @@ describe("GameBoard object", () => {
     });
   });
 
-  describe("coordinatesHit and CoordinatesNotYetHit properties", () => {
+  describe("coordinatesHit and coordinatesNotYetHit properties", () => {
     const myGameboard7 = Gameboard();
     const totalNumberOfCoordinate = myGameboard7.coordinatesNotYetHit.length;
     const coordinate1 = "1,6";
