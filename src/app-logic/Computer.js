@@ -1,6 +1,6 @@
 import Gameboard from "./Gameboard";
 
-const Computer = function ComputerFactory() {
+const Computer = function ComputerFactory(name = "Computer") {
   const gameboard = Gameboard();
   let opponent;
 
@@ -32,6 +32,9 @@ const Computer = function ComputerFactory() {
   };
 
   return {
+    get name() {
+      return name;
+    },
     get gameboard() {
       return gameboard;
     },

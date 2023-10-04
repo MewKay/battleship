@@ -8,7 +8,7 @@ const GameHandler = (() => {
 
   const newGame = function createANewGameWithASetOfPlayers() {
     player1 = Player("Player 1");
-    player2 = Computer();
+    player2 = Computer("Player 2");
 
     player1.gameboard.placeShip(ShipClasses.BATTLESHIP, "1,1", false);
     player1.gameboard.placeShip(ShipClasses.CARRIER, "10,1", true);
