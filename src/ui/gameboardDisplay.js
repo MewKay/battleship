@@ -1,9 +1,9 @@
-const createPlayerNameContainer = (Player) => {
+const createPlayerNameContainer = (Player, playerNumberClass) => {
   const container = document.createElement("div");
-  container.classList.add(`${Player.name}-title-container`);
+  container.classList.add(`${playerNumberClass}-title-container`);
 
   const title = document.createElement("h3");
-  title.classList.add(`${Player.name}-title`);
+  title.classList.add(`${playerNumberClass}-title`);
   title.textContent = Player.name;
 
   container.appendChild(title);
@@ -11,25 +11,36 @@ const createPlayerNameContainer = (Player) => {
   return container;
 };
 
-const createPlayerGameboardContainer = (Player) => {
+const createPlayerGameboardContainer = (Player, playerNumberClass) => {
   const container = document.createElement("div");
-  container.classList.add(`${Player.name}-gameboard`);
+  const coordinates = Player.gameboard.coordinates;
+  const coordinatesKeys = Object.keys(coordinates);
 
-  const coordinatesKeys = Object.keys(Player.gameboard.coordinates);
+  container.classList.add(`${playerNumberClass}-gameboard`);
   coordinatesKeys.forEach((key) => {
     const gameboardCell = document.createElement("div");
     gameboardCell.classList.add(key);
+    gameboardCell.style.backgroundColor = coordinates[key].isShipPlaced
+      ? "grey"
+      : "white";
     container.appendChild(gameboardCell);
   });
 
   return container;
 };
 
-const gameboardDisplay = function displayPlayersGameboard(Player) {
+const gameboardDisplay = function displayPlayersGameboard(Player, isPlayerOne) {
   const container = document.createElement("div");
-  container.classList.add(`${Player.name}-container`);
-  const playerNameContainer = createPlayerNameContainer(Player);
-  const gameboardContainer = createPlayerGameboardContainer(Player);
+  const playerNumberClass = isPlayerOne ? "player-1" : "player-2";
+  container.classList.add(`${playerNumberClass}-container`);
+  const playerNameContainer = createPlayerNameContainer(
+    Player,
+    playerNumberClass
+  );
+  const gameboardContainer = createPlayerGameboardContainer(
+    Player,
+    playerNumberClass
+  );
 
   const render = function renderGameboardInnerElements() {
     container.innerText = "";

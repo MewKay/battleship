@@ -1,0 +1,27 @@
+body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.game-title-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-content {
+  display: flex;
+  justify-content: space-around;
+}
+
+[class$="-gameboard"] {
+  border: 1px solid black;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+}
+
+[class$="-gameboard"] div {
+  border: 1px solid black;
+  padding: 1.2rem;
+}
