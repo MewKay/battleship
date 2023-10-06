@@ -20,9 +20,15 @@ const createPlayerGameboardContainer = (Player, playerNumberClass) => {
   coordinatesKeys.forEach((key) => {
     const gameboardCell = document.createElement("div");
     gameboardCell.classList.add(key);
-    gameboardCell.style.backgroundColor = coordinates[key].isShipPlaced
-      ? "grey"
-      : "white";
+
+    if (coordinates[key].hit === true) {
+      gameboardCell.innerText = "X";
+    }
+
+    if (coordinates[key].isShipPlaced === true) {
+      gameboardCell.classList.add("ship-placed");
+    }
+
     container.appendChild(gameboardCell);
   });
 
@@ -33,11 +39,12 @@ const gameboardDisplay = function displayPlayersGameboard(Player, isPlayerOne) {
   const container = document.createElement("div");
   const playerNumberClass = isPlayerOne ? "player-1" : "player-2";
   container.classList.add(`${playerNumberClass}-container`);
-  const playerNameContainer = createPlayerNameContainer(
+
+  let playerNameContainer = createPlayerNameContainer(
     Player,
     playerNumberClass
   );
-  const gameboardContainer = createPlayerGameboardContainer(
+  let gameboardContainer = createPlayerGameboardContainer(
     Player,
     playerNumberClass
   );
@@ -53,6 +60,9 @@ const gameboardDisplay = function displayPlayersGameboard(Player, isPlayerOne) {
   return {
     get container() {
       return container;
+    },
+    get gameboardContainer() {
+      return gameboardContainer;
     },
     render,
   };
