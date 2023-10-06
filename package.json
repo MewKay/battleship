@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --watchAll",
     "livepush": "git subtree push --prefix dist origin gh-pages",
     "watch-webpack": "webpack --watch"
   },

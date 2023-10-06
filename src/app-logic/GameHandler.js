@@ -3,12 +3,12 @@ import Computer from "./Computer";
 import ShipClasses from "./ShipClasses";
 
 const GameHandler = (() => {
-  let player1 = undefined;
-  let player2 = undefined;
+  let player1;
+  let player2;
 
   const newGame = function createANewGameWithASetOfPlayers() {
     player1 = Player("Player 1");
-    player2 = Player("Player 2");
+    player2 = Computer("Player 2");
 
     player1.setOpponent(player2);
     player2.setOpponent(player1);
@@ -26,6 +26,13 @@ const GameHandler = (() => {
     player2.gameboard.placeShip(ShipClasses.SUBMARINE, "8,4", false);
   };
 
+  const playTurn = function makeTheCurrentPlayerPlayMove(coordinate) {
+    player1.playMove(coordinate);
+    player2.playMove();
+  };
+
+  newGame();
+
   return {
     get player1() {
       return player1;
@@ -33,7 +40,11 @@ const GameHandler = (() => {
     get player2() {
       return player2;
     },
+    get currentPlayer() {
+      return currentPlayer;
+    },
     newGame,
+    playTurn,
   };
 })();
 

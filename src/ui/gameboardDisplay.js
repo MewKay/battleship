@@ -13,26 +13,33 @@ const createPlayerNameContainer = (Player, playerNumberClass) => {
 
 const createPlayerGameboardContainer = (Player, playerNumberClass) => {
   const container = document.createElement("div");
-  const coordinates = Player.gameboard.coordinates;
-  const coordinatesKeys = Object.keys(coordinates);
 
-  container.classList.add(`${playerNumberClass}-gameboard`);
-  coordinatesKeys.forEach((key) => {
-    const gameboardCell = document.createElement("div");
-    gameboardCell.classList.add(key);
+  const render = () => {
+    const coordinates = Player.gameboard.coordinates;
+    const coordinatesKeys = Object.keys(coordinates);
 
-    if (coordinates[key].hit === true) {
-      gameboardCell.innerText = "X";
-    }
+    container.classList.add(`${playerNumberClass}-gameboard`);
+    coordinatesKeys.forEach((key) => {
+      const gameboardCell = document.createElement("div");
+      gameboardCell.classList.add(key);
 
-    if (coordinates[key].isShipPlaced === true) {
-      gameboardCell.classList.add("ship-placed");
-    }
+      if (coordinates[key].hit === true) {
+        gameboardCell.innerText = "X";
+        gameboardCell.classList.add("hit");
+      }
 
-    container.appendChild(gameboardCell);
-  });
+      if (coordinates[key].isShipPlaced === true) {
+        gameboardCell.classList.add("ship-placed");
+      }
 
-  return container;
+      container.appendChild(gameboardCell);
+    });
+  };
+
+  return {
+    container,
+    render,
+  };
 };
 
 const gameboardDisplay = function displayPlayersGameboard(Player, isPlayerOne) {
@@ -40,22 +47,24 @@ const gameboardDisplay = function displayPlayersGameboard(Player, isPlayerOne) {
   const playerNumberClass = isPlayerOne ? "player-1" : "player-2";
   container.classList.add(`${playerNumberClass}-container`);
 
-  let playerNameContainer = createPlayerNameContainer(
+  const playerNameContainer = createPlayerNameContainer(
     Player,
     playerNumberClass
   );
-  let gameboardContainer = createPlayerGameboardContainer(
+  const gameboardContainer = createPlayerGameboardContainer(
     Player,
     playerNumberClass
   );
 
-  const render = function renderGameboardInnerElements() {
-    container.innerText = "";
-    container.appendChild(playerNameContainer);
-    container.appendChild(gameboardContainer);
+  container.appendChild(playerNameContainer);
+  container.appendChild(gameboardContainer.container);
+
+  const renderGameboard = function renderGameboardInnerElements() {
+    gameboardContainer.container.innerText = "";
+    gameboardContainer.render();
   };
 
-  render();
+  renderGameboard();
 
   return {
     get container() {
@@ -64,7 +73,7 @@ const gameboardDisplay = function displayPlayersGameboard(Player, isPlayerOne) {
     get gameboardContainer() {
       return gameboardContainer;
     },
-    render,
+    renderGameboard,
   };
 };
 
