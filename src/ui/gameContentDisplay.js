@@ -22,7 +22,7 @@ const gameContent = function displayGameContent() {
     ) {
       return;
     }
-    console.log(event.target.className);
+
     GameHandler.playTurn(cellCoordinate);
     player1Display.renderGameboard();
     player2Display.renderGameboard();

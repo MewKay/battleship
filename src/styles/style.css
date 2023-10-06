@@ -44,3 +44,7 @@ body {
 [class$="-gameboard"] .ship-placed.hit {
   color: red;
 }
+
+[class$="-gameboard"] .hidden {
+  background-color: white;
+}

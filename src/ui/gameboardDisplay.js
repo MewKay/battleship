@@ -22,10 +22,12 @@ const createPlayerGameboardContainer = (Player, playerNumberClass) => {
     coordinatesKeys.forEach((key) => {
       const gameboardCell = document.createElement("div");
       gameboardCell.classList.add(key);
+      gameboardCell.classList.add("hidden");
 
       if (coordinates[key].hit === true) {
         gameboardCell.innerText = "X";
         gameboardCell.classList.add("hit");
+        gameboardCell.classList.remove("hidden");
       }
 
       if (coordinates[key].isShipPlaced === true) {
