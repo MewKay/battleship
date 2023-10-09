@@ -26,6 +26,8 @@ const gameContent = function displayGameContent() {
     GameHandler.playTurn(cellCoordinate);
     player1Display.renderGameboard();
     player2Display.renderGameboard();
+
+    console.log(GameHandler.checkGameEnd());
   });
 
   return container;

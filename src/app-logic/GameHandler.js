@@ -32,11 +32,27 @@ const GameHandler = (() => {
   };
 
   const playTurn = function makeTheCurrentPlayerPlayMove(coordinate) {
+    if (checkGameEnd() === true) {
+      console.log("Game has ended so we get out");
+      return;
+    }
+
     currentPlayer.playMove(coordinate);
+    console.log("Player play the move");
+
+    if (checkGameEnd() === true) {
+      return;
+    }
+    console.log("Player switch the move - game continue...");
     switchTurn();
 
     if (isComputerGame === true) {
+      console.log("Computer play the move");
       currentPlayer.playMove();
+      if (checkGameEnd() === true) {
+        return;
+      }
+      console.log("Computer switch the move - game continue...");
       switchTurn();
     }
   };
@@ -51,6 +67,13 @@ const GameHandler = (() => {
       player1.switchTurn();
       player2.switchTurn();
     }
+  };
+
+  const checkGameEnd = function checkIfOneOfGameboardHaveAllShipSunk() {
+    return (
+      player1.gameboard.allShipsSunk() === true ||
+      player2.gameboard.allShipsSunk() === true
+    );
   };
 
   newGame();
@@ -70,6 +93,7 @@ const GameHandler = (() => {
     },
     newGame,
     playTurn,
+    checkGameEnd,
   };
 })();
 
