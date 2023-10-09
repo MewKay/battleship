@@ -64,6 +64,12 @@ const gameboardDisplay = function displayPlayersGameboard(Player, isPlayerOne) {
   const renderGameboard = function renderGameboardInnerElements() {
     gameboardContainer.container.innerText = "";
     gameboardContainer.render();
+
+    if (Player.isTurn) {
+      container.classList.add("not-turn");
+    } else {
+      container.classList.remove("not-turn");
+    }
   };
 
   renderGameboard();

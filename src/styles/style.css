@@ -48,3 +48,8 @@ body {
 [class$="-gameboard"] .hidden {
   background-color: white;
 }
+
+.game-content .not-turn {
+  opacity: 0.3;
+  pointer-events: none;
+}
