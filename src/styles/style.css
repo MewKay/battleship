@@ -13,6 +13,8 @@ body {
 .game-content {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
 
 .game-message-container {
@@ -24,6 +26,7 @@ body {
 .gameboard-container {
   display: flex;
   justify-content: space-around;
+  gap: 5rem;
 }
 
 [class$="-gameboard"] {

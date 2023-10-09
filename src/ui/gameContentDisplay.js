@@ -1,23 +1,36 @@
 import GameHandler from "../app-logic/GameHandler";
 import gameboardDisplay from "./gameboardDisplay";
 import gameMessage from "./gameMessage";
+import restartButton from "./restartGame";
 
 const gameContent = function displayGameContent() {
   const container = document.createElement("div");
   container.classList.add("game-content");
 
-  const gameboardContainer = document.createElement("div");
-  gameboardContainer.classList.add("gameboard-container");
+  const gameRestartButton = restartButton();
 
-  const player1Display = gameboardDisplay(GameHandler.player1, true);
-  const player2Display = gameboardDisplay(GameHandler.player2, false);
-  gameboardContainer.appendChild(player1Display.container);
-  gameboardContainer.appendChild(player2Display.container);
+  let player1Display;
+  let player2Display;
 
-  container.appendChild(gameMessage.container);
-  container.appendChild(gameboardContainer);
+  const render = function renderGameInterface() {
+    container.innerText = "";
 
-  gameMessage.update();
+    const gameboardContainer = document.createElement("div");
+    gameboardContainer.classList.add("gameboard-container");
+
+    player1Display = gameboardDisplay(GameHandler.player1, true);
+    player2Display = gameboardDisplay(GameHandler.player2, false);
+
+    gameboardContainer.appendChild(player1Display.container);
+    gameboardContainer.appendChild(player2Display.container);
+
+    container.appendChild(gameMessage.container);
+    container.appendChild(gameboardContainer);
+    container.appendChild(gameRestartButton);
+
+    gameMessage.update();
+  };
+
   container.addEventListener("click", (event) => {
     const parentClassName = event.target.parentNode.className;
     const cellCoordinate = event.target.classList[0];
@@ -35,7 +48,19 @@ const gameContent = function displayGameContent() {
     player2Display.renderGameboard();
 
     gameMessage.update();
+
+    if (GameHandler.checkGameEnd() === true) {
+      gameRestartButton.style.display = "block";
+    }
   });
+
+  gameRestartButton.addEventListener("click", () => {
+    gameRestartButton.style.display = "none";
+    GameHandler.newGame();
+    render();
+  });
+
+  render();
 
   return container;
 };
