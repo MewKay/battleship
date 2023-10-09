@@ -3,6 +3,7 @@ import Gameboard from "./Gameboard";
 const Computer = function ComputerFactory(name = "Computer") {
   const gameboard = Gameboard();
   let opponent;
+  let isTurn = false;
 
   const setOpponent = function defineThePlayersOpponent(player) {
     opponent = player;
@@ -31,6 +32,10 @@ const Computer = function ComputerFactory(name = "Computer") {
     opponent.gameboard.receiveAttack(targetCoordinates);
   };
 
+  const switchTurn = () => {
+    isTurn = !isTurn;
+  };
+
   return {
     get name() {
       return name;
@@ -41,6 +46,10 @@ const Computer = function ComputerFactory(name = "Computer") {
     get opponent() {
       return opponent;
     },
+    get isTurn() {
+      return isTurn;
+    },
+    switchTurn,
     setOpponent,
     playMove,
   };

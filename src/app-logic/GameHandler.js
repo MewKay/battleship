@@ -5,6 +5,8 @@ import ShipClasses from "./ShipClasses";
 const GameHandler = (() => {
   let player1;
   let player2;
+  let currentPlayer;
+  let isComputerGame = true;
 
   const newGame = function createANewGameWithASetOfPlayers() {
     player1 = Player("Player 1");
@@ -12,6 +14,9 @@ const GameHandler = (() => {
 
     player1.setOpponent(player2);
     player2.setOpponent(player1);
+
+    currentPlayer = player1;
+    player1.switchTurn();
 
     player1.gameboard.placeShip(ShipClasses.BATTLESHIP, "1,1", false);
     player1.gameboard.placeShip(ShipClasses.CARRIER, "10,1", true);
@@ -27,8 +32,25 @@ const GameHandler = (() => {
   };
 
   const playTurn = function makeTheCurrentPlayerPlayMove(coordinate) {
-    player1.playMove(coordinate);
-    player2.playMove();
+    currentPlayer.playMove(coordinate);
+    switchTurn();
+
+    if (isComputerGame === true) {
+      currentPlayer.playMove();
+      switchTurn();
+    }
+  };
+
+  const switchTurn = function changeCurrentPlayerToTheOther() {
+    if (player1.isTurn === true) {
+      currentPlayer = player2;
+      player1.switchTurn();
+      player2.switchTurn();
+    } else {
+      currentPlayer = player1;
+      player1.switchTurn();
+      player2.switchTurn();
+    }
   };
 
   newGame();
@@ -42,6 +64,9 @@ const GameHandler = (() => {
     },
     get currentPlayer() {
       return currentPlayer;
+    },
+    get isComputerGame() {
+      return isComputerGame;
     },
     newGame,
     playTurn,
