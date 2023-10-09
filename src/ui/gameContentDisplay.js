@@ -1,16 +1,23 @@
 import GameHandler from "../app-logic/GameHandler";
 import gameboardDisplay from "./gameboardDisplay";
+import gameMessage from "./gameMessage";
 
 const gameContent = function displayGameContent() {
   const container = document.createElement("div");
   container.classList.add("game-content");
 
+  const gameboardContainer = document.createElement("div");
+  gameboardContainer.classList.add("gameboard-container");
+
   const player1Display = gameboardDisplay(GameHandler.player1, true);
   const player2Display = gameboardDisplay(GameHandler.player2, false);
+  gameboardContainer.appendChild(player1Display.container);
+  gameboardContainer.appendChild(player2Display.container);
 
-  container.appendChild(player1Display.container);
-  container.appendChild(player2Display.container);
+  container.appendChild(gameMessage.container);
+  container.appendChild(gameboardContainer);
 
+  gameMessage.update();
   container.addEventListener("click", (event) => {
     const parentClassName = event.target.parentNode.className;
     const cellCoordinate = event.target.classList[0];
@@ -27,7 +34,7 @@ const gameContent = function displayGameContent() {
     player1Display.renderGameboard();
     player2Display.renderGameboard();
 
-    console.log(GameHandler.checkGameEnd());
+    gameMessage.update();
   });
 
   return container;

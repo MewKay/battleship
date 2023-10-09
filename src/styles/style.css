@@ -12,6 +12,17 @@ body {
 
 .game-content {
   display: flex;
+  flex-direction: column;
+}
+
+.game-message-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gameboard-container {
+  display: flex;
   justify-content: space-around;
 }
 
